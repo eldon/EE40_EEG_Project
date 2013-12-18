@@ -85,7 +85,7 @@ void loop()
       numericalGainUpdate(sel_key); // Numeric Key routine
     }
   }
-  uint8_t * pot_chg_val = updatePotentiometers();
+  bool pot_chg_val = updatePotentiometers();
   if (pot_chg_val || lastSelectedPot != selectedPot) {
     lastSelectedPot = selectedPot;
     lcd.clear();
@@ -103,7 +103,7 @@ void loop()
   }
 }
 
-uint8_t* updatePotentiometers()
+bool updatePotentiometers()
 {
   bool pot_change_flag = 0;
   for (int i=0; i<2; i++) {
@@ -113,11 +113,7 @@ uint8_t* updatePotentiometers()
       last_potval[i] = potval[i];
     }
   }
-  if (pot_change_flag) {
-    return potval;
-  } else {
-    return 0;
-  }
+  return pot_change_flag;
 }
 
 void numericalGainUpdate(byte initKey)
